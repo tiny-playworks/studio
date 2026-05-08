@@ -1,0 +1,9 @@
+node_modules
+dist
+.playwright-cli
+output
+.wrangler
+.DS_Store
+.dev.vars
+.env.local
+.env.*.local
