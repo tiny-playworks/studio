@@ -2,7 +2,18 @@ import { motion } from 'framer-motion';
 import { studioProjects } from '../data/projects';
 import { ProjectTooltip } from './ProjectTooltip';
 
-export function WorldHotspots() {
+export interface CoverImageLayout {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+interface WorldHotspotsProps {
+  imageLayout: CoverImageLayout | null;
+}
+
+export function WorldHotspots({ imageLayout }: WorldHotspotsProps) {
   return (
     <div className="world-hotspots" aria-label="Studio projects">
       {studioProjects.map((project, index) => (
@@ -10,13 +21,17 @@ export function WorldHotspots() {
           key={project.name}
           className="world-hotspot"
           href={project.href}
-          target="_blank"
-          rel="noreferrer"
+          target={project.href.startsWith('#') ? undefined : '_blank'}
+          rel={project.href.startsWith('#') ? undefined : 'noreferrer'}
           aria-label={`${project.name}: ${project.status}`}
           style={
             {
-              '--x': `${project.hotspot.x}%`,
-              '--y': `${project.hotspot.y}%`,
+              '--x': imageLayout
+                ? `${imageLayout.left + (imageLayout.width * project.hotspot.x) / 100}px`
+                : `${project.hotspot.x}%`,
+              '--y': imageLayout
+                ? `${imageLayout.top + (imageLayout.height * project.hotspot.y) / 100}px`
+                : `${project.hotspot.y}%`,
             } as React.CSSProperties
           }
           initial={{ opacity: 0, scale: 0.8 }}

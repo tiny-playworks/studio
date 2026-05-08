@@ -10,6 +10,7 @@ export interface StudioProject {
   description: string;
   status: ProjectStatus;
   href: string;
+  hrefLabel: string;
   hotspot: {
     x: number;
     y: number;
@@ -23,7 +24,8 @@ export const studioProjects: StudioProject[] = [
     place: 'cottage island',
     description: 'A slow garden for interface craft and small front-end rituals.',
     status: 'active',
-    href: 'https://github.com/tiny-playworks/frontend-cultivation',
+    href: 'https://frontend-cultivation.pages.dev/',
+    hrefLabel: 'Open experience',
     hotspot: { x: 22, y: 66, align: 'left' },
   },
   {
@@ -31,7 +33,8 @@ export const studioProjects: StudioProject[] = [
     place: 'lighthouse island',
     description: 'A vertical wandering experiment about rhythm and thin air.',
     status: 'playable prototype',
-    href: 'https://github.com/tiny-playworks/spirewalker',
+    href: 'https://spirewalker.miaoduidui.workers.dev/',
+    hrefLabel: 'Play prototype',
     hotspot: { x: 28, y: 22, align: 'left' },
   },
   {
@@ -39,7 +42,8 @@ export const studioProjects: StudioProject[] = [
     place: 'mahjong pavilion',
     description: 'Tiny rule twists around a familiar table.',
     status: 'experimental',
-    href: 'https://github.com/tiny-playworks/mahjong-mini-games',
+    href: 'https://game-hub-mdd.vercel.app/',
+    hrefLabel: 'Open game hub',
     hotspot: { x: 80, y: 55, align: 'right' },
   },
   {
@@ -47,7 +51,8 @@ export const studioProjects: StudioProject[] = [
     place: 'ruin island',
     description: 'A lighter loop for shaping vague ideas into working things.',
     status: 'active',
-    href: 'https://github.com/tiny-playworks/specflow',
+    href: '#projects',
+    hrefLabel: 'Experience pending',
     hotspot: { x: 76, y: 22, align: 'right' },
   },
   {
@@ -55,7 +60,8 @@ export const studioProjects: StudioProject[] = [
     place: 'writing desk island',
     description: 'A small weather station for moods, traces, and tiny reflections.',
     status: 'shelved',
-    href: 'https://github.com/tiny-playworks/mood-log',
+    href: '#projects',
+    hrefLabel: 'Experience pending',
     hotspot: { x: 72, y: 80, align: 'right' },
   },
 ];

@@ -8,11 +8,11 @@ export function MobileProjectList() {
           key={project.name}
           className="mobile-project"
           href={project.href}
-          target="_blank"
-          rel="noreferrer"
+          target={project.href.startsWith('#') ? undefined : '_blank'}
+          rel={project.href.startsWith('#') ? undefined : 'noreferrer'}
         >
           <span>{project.name}</span>
-          <small>{project.status}</small>
+          <small>{project.hrefLabel}</small>
         </a>
       ))}
     </section>

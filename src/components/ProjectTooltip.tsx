@@ -11,6 +11,7 @@ export function ProjectTooltip({ project }: ProjectTooltipProps) {
       <strong>{project.name}</strong>
       <span>{project.status}</span>
       <span>{project.description}</span>
+      <em>{project.hrefLabel}</em>
     </span>
   );
 }

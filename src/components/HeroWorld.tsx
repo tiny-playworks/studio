@@ -1,15 +1,83 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MobileProjectList } from './MobileProjectList';
-import { WorldHotspots } from './WorldHotspots';
+import { type CoverImageLayout, WorldHotspots } from './WorldHotspots';
+
+function readPositionPercent(value: string, axis: 'x' | 'y') {
+  if (value.endsWith('%')) {
+    return Number.parseFloat(value) / 100;
+  }
+
+  if (value === 'left' || value === 'top') {
+    return 0;
+  }
+
+  if (value === 'right' || value === 'bottom') {
+    return 1;
+  }
+
+  if (value === 'center') {
+    return 0.5;
+  }
+
+  return axis === 'x' ? 0.5 : 0.5;
+}
 
 export function HeroWorld() {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [imageLayout, setImageLayout] = useState<CoverImageLayout | null>(null);
+
+  const updateImageLayout = useCallback(() => {
+    const image = imageRef.current;
+
+    if (!image || !image.naturalWidth || !image.naturalHeight) {
+      return;
+    }
+
+    const rect = image.getBoundingClientRect();
+    const style = window.getComputedStyle(image);
+    const [x = '50%', y = '50%'] = style.objectPosition.split(' ');
+    const scale = Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+    const width = image.naturalWidth * scale;
+    const height = image.naturalHeight * scale;
+    const extraX = rect.width - width;
+    const extraY = rect.height - height;
+
+    setImageLayout({
+      left: rect.left + extraX * readPositionPercent(x, 'x'),
+      top: rect.top + extraY * readPositionPercent(y, 'y'),
+      width,
+      height,
+    });
+  }, []);
+
+  useEffect(() => {
+    updateImageLayout();
+
+    const image = imageRef.current;
+    const resizeObserver = new ResizeObserver(updateImageLayout);
+
+    if (image) {
+      resizeObserver.observe(image);
+    }
+
+    window.addEventListener('resize', updateImageLayout);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateImageLayout);
+    };
+  }, [updateImageLayout]);
+
   return (
     <main className="hero-world">
       <img
+        ref={imageRef}
         className="hero-world__image"
         src="/assets/world-hero.png"
         alt=""
         aria-hidden="true"
+        onLoad={updateImageLayout}
       />
       <div className="hero-world__light" aria-hidden="true" />
       <motion.div
@@ -38,7 +106,7 @@ export function HeroWorld() {
         </a>
       </motion.section>
 
-      <WorldHotspots />
+      <WorldHotspots imageLayout={imageLayout} />
       <MobileProjectList />
     </main>
   );
