@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { studioProjects } from '../data/projects';
 import { MobileProjectList } from './MobileProjectList';
 import { type CoverImageLayout, WorldHotspots } from './WorldHotspots';
 
@@ -26,6 +27,7 @@ function readPositionPercent(value: string, axis: 'x' | 'y') {
 export function HeroWorld() {
   const imageRef = useRef<HTMLImageElement>(null);
   const [imageLayout, setImageLayout] = useState<CoverImageLayout | null>(null);
+  const gameWeekly = studioProjects.find((project) => project.name === 'Game Weekly');
 
   const updateImageLayout = useCallback(() => {
     const image = imageRef.current;
@@ -101,9 +103,11 @@ export function HeroWorld() {
           <br />
           and tiny digital worlds.
         </h1>
-        <a className="hero-world__enter" href="#projects">
-          Enter Studio
-        </a>
+        {gameWeekly ? (
+          <a className="hero-world__enter" href={gameWeekly.href} target="_blank" rel="noreferrer">
+            Open Weekly
+          </a>
+        ) : null}
       </motion.section>
 
       <WorldHotspots imageLayout={imageLayout} />

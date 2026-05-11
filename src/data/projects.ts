@@ -20,6 +20,15 @@ export interface StudioProject {
 
 export const studioProjects: StudioProject[] = [
   {
+    name: 'Game Weekly',
+    place: 'news tower',
+    description: 'A compact weekly feed for game news, notes, and source-driven picks.',
+    status: 'active',
+    href: 'https://game-weekly.pages.dev/',
+    hrefLabel: 'Open weekly',
+    hotspot: { x: 52, y: 52, align: 'left' },
+  },
+  {
     name: 'Frontend Cultivation',
     place: 'cottage island',
     description: 'A slow garden for interface craft and small front-end rituals.',
